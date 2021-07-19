@@ -56,8 +56,6 @@ class User implements UserInterface
 
 
 
-
-
     public function getFullName() {
         return $this->name;
     }
@@ -211,7 +209,6 @@ class User implements UserInterface
             $this->userRoles->removeElement($userRole);
             $userRole->removeUser($this);
         }
-
         return $this;
     }
 

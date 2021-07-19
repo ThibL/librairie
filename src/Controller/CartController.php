@@ -25,6 +25,13 @@ class CartController extends AbstractController
         ]);
     }
 
+    public function navbarTotal(CartService $cartService) {
+        $total = $cartService->getTotal();
+        return $this->render('cart/navcart.html.twig', [
+            'total' => $total
+        ]);
+    }
+
     /**
      * @Route("/panier/add/{id}", name="carte_add")
      */

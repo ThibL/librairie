@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello BookController!{% endblock %}
+
+{% block body %}
+    <div class="d-flex flex-wrap m-2 p-2">
+        {% for book in books %}
+            <div class="card m-2" style="width: 18rem;">
+                <img class="card-img-top" src="{{ book.image }}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">{{ book.titre }}</h5>
+                    <h6 class="card-title">Auteur: {{ book.author }}</h6>
+                    <hr>
+                    <span>ISBN: {{ book.iSBN }}</span>
+                    <hr>
+                    <p class="card-text mt-2">Some quick example text to build on the card title and make up the bulk of the
+                        card's content.</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="{{ path('show_book', {id: book.id}) }}" class="btn btn-primary mr-auto">Voir le détail</a>
+                        <span>{{ book.prix }} €</span>
+                        <span><a href="{{ path('carte_add', {id: book.id}) }}"><i class="fas fa-plus"></i></a></span>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

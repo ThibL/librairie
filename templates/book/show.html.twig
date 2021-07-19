@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="d-flex justify-content-center">
+        <div class="card m-2" style="width: 18rem;">
+            <img class="card-img-top" src="{{ book.image }}" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">{{ book.titre }}</h5>
+                <h6 class="card-title">Auteur: {{ book.author }}</h6>
+                <hr>
+                <span>ISBN: {{ book.iSBN }}</span>
+                <hr>
+                <p class="card-text mt-2">Some quick example text to build on the card title and make up the bulk of the
+                    card's content.</p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <a href="{{ path('carte_add', {id: book.id}) }}" class="btn btn-primary mr-auto">Ajouter au panier</a>
+                    <span>{{ book.prix }} €</span>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

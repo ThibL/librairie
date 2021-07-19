@@ -9,55 +9,84 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ * @method string getUserIdentifier()
  */
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+class User implements UserInterface
 {
     /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
+     * @ORM\Id()
+     * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=180, unique=true)
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Vous devez renseigner votre nom de famille")
+     */
+    private $name;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\Email(message="Veuillez renseigner un email valide")
      */
     private $email;
+
 
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $hash;
 
-
     /**
-     * @ORM\Column(type="json")
+     * @Assert\EqualTo(propertyPath="hash", message="Vous n'avez pas entré les mêmes mots de passe")
      */
-    private $roles = [];
+    public $passwordConfirm;
+
 
     /**
-     * @var string The hashed password
-     * @ORM\Column(type="string")
-     */
-    private $password;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Role::class, mappedBy="users")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Role", mappedBy="users")
      */
     private $userRoles;
 
+
+
+
+
+    public function getFullName() {
+        return $this->name;
+    }
+
     public function __construct()
     {
+        $this->ads = new ArrayCollection();
         $this->userRoles = new ArrayCollection();
+        $this->bookings = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+
+
+    public function getname(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setname(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
     }
 
     public function getEmail(): ?string
@@ -72,15 +101,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * A visual identifier that represents this user.
-     *
-     * @see UserInterface
-     */
-    public function getUserIdentifier(): string
-    {
-        return (string) $this->email;
-    }
 
 
     public function getHash(): ?string
@@ -96,19 +116,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
 
-
     /**
-     * @deprecated since Symfony 5.3, use getUserIdentifier instead
+     * Returns the roles granted to the user.
+     *
+     *     public function getRoles()
+     *     {
+     *         return ['ROLE_USER'];
+     *     }
+     *
+     * Alternatively, the roles might be stored on a ``roles`` property,
+     * and populated in any number of different ways when the user object
+     * is created.
+     *
+     * @return (Role|string)[] The user roles
      */
-    public function getUsername(): string
-    {
-        return (string) $this->email;
-    }
-
-    /**
-     * @see UserInterface
-     */
-    public function getRoles(): array
+    public function getRoles()
     {
         $roles = $this->userRoles->map(function ($role) {
             return $role->getTitle();
@@ -117,49 +139,52 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $roles[] = 'ROLE_USER';
 
         return $roles;
-
-    }
-
-    public function setRoles(array $roles): self
-    {
-        $this->roles = $roles;
-
-        return $this;
     }
 
     /**
-     * @see PasswordAuthenticatedUserInterface
+     * Returns the password used to authenticate the user.
+     *
+     * This should be the encoded password. On authentication, a plain-text
+     * password will be salted, encoded, and then compared to this value.
+     *
+     * @return string The password
      */
-    public function getPassword(): string
+    public function getPassword()
     {
         return $this->hash;
     }
 
-    public function setPassword(string $password): self
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
     /**
-     * Returning a salt is only needed, if you are not using a modern
-     * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
+     * Returns the salt that was originally used to encode the password.
      *
-     * @see UserInterface
+     * This can return null if the password was not encoded using a salt.
+     *
+     * @return string|null The salt
      */
-    public function getSalt(): ?string
+    public function getSalt()
     {
-        return null;
+        // TODO: Implement getSalt() method.
     }
 
     /**
-     * @see UserInterface
+     * Returns the username used to authenticate the user.
+     *
+     * @return string The username
+     */
+    public function getUsername()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Removes sensitive data from the user.
+     *
+     * This is important if, at any given point, sensitive information like
+     * the plain-text password is stored on this object.
      */
     public function eraseCredentials()
     {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+        // TODO: Implement eraseCredentials() method.
     }
 
     /**
@@ -182,10 +207,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeUserRole(Role $userRole): self
     {
-        if ($this->userRoles->removeElement($userRole)) {
+        if ($this->userRoles->contains($userRole)) {
+            $this->userRoles->removeElement($userRole);
             $userRole->removeUser($this);
         }
 
         return $this;
+    }
+
+
+    public function __call($name, $arguments)
+    {
+        // TODO: Implement @method string getUserIdentifier()
     }
 }

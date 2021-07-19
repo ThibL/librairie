@@ -29,7 +29,7 @@ class Ouvrage
     private $titre;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string")
      */
     private $ISBN;
 
@@ -48,6 +48,11 @@ class Ouvrage
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $image;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $resume;
 
     public function getId(): ?int
     {
@@ -84,7 +89,7 @@ class Ouvrage
         return $this->ISBN;
     }
 
-    public function setISBN(int $ISBN): self
+    public function setISBN(string $ISBN): self
     {
         $this->ISBN = $ISBN;
 
@@ -123,6 +128,18 @@ class Ouvrage
     public function setImage(?string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getResume(): ?string
+    {
+        return $this->resume;
+    }
+
+    public function setResume(string $resume): self
+    {
+        $this->resume = $resume;
 
         return $this;
     }

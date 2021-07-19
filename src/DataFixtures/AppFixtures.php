@@ -23,21 +23,27 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $faker = Faker\Factory::create('fr_FR');
-        // $product = new Product();
-        // $manager->persist($product);
         $adminRole = new Role();
         $adminRole->setTitle('ROLE_ADMIN');
         $manager->persist($adminRole);
 
         $adminUser = new User();
         $adminUser->setEmail('thibaudlevy@titi.com')
-            ->setPassword('password')
+            ->setname("Thibaud")
             ->setHash($this->encoder->encodePassword($adminUser, 'password'))
             ->addUserRole($adminRole);
 
         $manager->persist($adminUser);
 
 
+
+
+        $fakerUser = new User();
+        $fakerUser->setEmail('user@user.com')
+            ->setname("User")
+            ->setHash($this->encoder->encodePassword($fakerUser, 'password'));
+
+        $manager->persist($fakerUser);
 
         $authors = Array();
         for($i = 0; $i < 10; $i++) {
@@ -52,9 +58,10 @@ class AppFixtures extends Fixture
         for($i = 0; $i < 12; $i++) {
             $ouvrage[$i] = new Ouvrage();
             $ouvrage[$i]->setTitre($faker->company);
-            $ouvrage[$i]->setISBN($faker->numberBetween(1, 1000));
+            $ouvrage[$i]->setISBN($faker->isbn10);
             $ouvrage[$i]->setPrix($faker->numberBetween(10, 20));
             $ouvrage[$i]->setTheme("Horror");
+            $ouvrage[$i]->setResume($faker->sentence(50, true));
             $ouvrage[$i]->setImage("https://via.placeholder.com/150");
             $ouvrage[$i]->setAuthor($authors[$i % 3]);
 

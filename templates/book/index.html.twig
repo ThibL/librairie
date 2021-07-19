@@ -13,13 +13,13 @@
                     <hr>
                     <span>ISBN: {{ book.iSBN }}</span>
                     <hr>
-                    <p class="card-text mt-2">Some quick example text to build on the card title and make up the bulk of the
-                        card's content.</p>
-                    <div class="d-flex justify-content-between align-items-center">
+                    <p class="card-text mt-2">{{ book.resume | slice(0, 40) }}...</p>
+                    <div class="d-flex justify-content-between align-items-center mb-2">
                         <a href="{{ path('show_book', {id: book.id}) }}" class="btn btn-primary mr-auto">Voir le détail</a>
-                        <span>{{ book.prix }} €</span>
-                        <span><a href="{{ path('carte_add', {id: book.id}) }}"><i class="fas fa-plus"></i></a></span>
+                        <span><strong>{{ book.prix }} €</strong></span>
+
                     </div>
+                        <a href="{{ path('carte_add', {id: book.id}) }}" class="btn btn-warning mr-auto d-block btn-sm">Ajouter au panier</a>
                 </div>
             </div>
         {% endfor %}

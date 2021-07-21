@@ -29,6 +29,7 @@ class OuvrageCrudController extends AbstractCrudController
             IntegerField::new('prix'),
             TextField::new('image'),
             AssociationField::new('author'),
+            AssociationField::new('category'),
         ];
     }
 

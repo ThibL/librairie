@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Author;
+use App\Entity\Category;
 use App\Entity\Ouvrage;
 use App\Entity\Role;
 use App\Entity\User;
@@ -56,17 +57,22 @@ class AppFixtures extends Fixture
         $ouvrage = [];
 
         for($i = 0; $i < 12; $i++) {
+            $category=new Category();
+            $category->setName($faker->word);
+            $manager->persist($category);
             $ouvrage[$i] = new Ouvrage();
             $ouvrage[$i]->setTitre($faker->company);
             $ouvrage[$i]->setISBN($faker->isbn10);
             $ouvrage[$i]->setPrix($faker->numberBetween(10, 20));
             $ouvrage[$i]->setTheme("Horror");
             $ouvrage[$i]->setResume($faker->sentence(50, true));
-            $ouvrage[$i]->setImage("https://memegenerator.net/img/images/16143029.jpg");
+            $ouvrage[$i]->setImage("/assets/image/cover.png");
             $ouvrage[$i]->setAuthor($authors[$i % 3]);
+            $ouvrage[$i]->addCategory($category);
 
             $manager->persist($ouvrage[$i]);
         }
+
 
         $manager->flush();
     }

@@ -47,7 +47,7 @@ class BookController extends AbstractController
                 'id'=>$book->getId()
             ]);
         }
-        return $this->render('book/show.html.twig', [
+        return $this->render('ass', [
             'book' => $book,
             'form'=> $form->createView()
         ]);

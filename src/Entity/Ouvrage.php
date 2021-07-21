@@ -62,7 +62,7 @@ class Ouvrage
     private $comments;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Category::class, mappedBy="book)
+     * @ORM\ManyToMany(targetEntity=Category::class, mappedBy="book",cascade={"persist"})
      */
     private $categories;
 

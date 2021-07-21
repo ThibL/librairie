@@ -69,7 +69,7 @@ class AppFixtures extends Fixture
             $ouvrage[$i]->setPrix($faker->numberBetween(10, 20));
             $ouvrage[$i]->setTheme("Horror");
             $ouvrage[$i]->setResume($faker->sentence(50, true));
-            $ouvrage[$i]->setImage("https://memegenerator.net/img/images/16143029.jpg");
+            $ouvrage[$i]->setImage('/assets/image/cover.png');
             $ouvrage[$i]->setAuthor($authors[$i % 3]);
             $ouvrage[$i]->addCategory($category);
             $ouvrage[$i]->addCategory($category2);

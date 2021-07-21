@@ -22,13 +22,35 @@ class OuvrageCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            TextField::new('titre'),
-            TextField::new('ISBN'),
-            TextField::new('theme'),
-            TextEditorField::new('resume'),
-            IntegerField::new('prix'),
-            TextField::new('image'),
-            AssociationField::new('author'),
+           yield TextField::new('titre')
+                ->setFormTypeOptions([
+                    'by_reference' => false
+                ]),
+            yield TextField::new('ISBN')
+                ->setFormTypeOptions([
+                    'by_reference' => false
+                ]),
+            yield TextField::new('theme')
+                ->setFormTypeOptions([
+                    'by_reference' => false
+                ]),
+            yield TextEditorField::new('resume')
+                ->setFormTypeOptions([
+                    'by_reference' => false
+                ]),
+            yield IntegerField::new('prix')
+                ->setFormTypeOptions([
+                    'by_reference' => false
+                ]),
+            yield TextField::new('image')
+                ->setFormTypeOptions([
+                    'by_reference' => false
+                ]),
+           yield AssociationField::new('author'),
+            yield AssociationField::new('categories')
+            ->setFormTypeOptions([
+                'by_reference' => false
+            ])
         ];
     }
 

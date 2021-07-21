@@ -11,6 +11,12 @@
                 <img class="card-img-top" src="{{ book.image }}" alt="Card image cap">
                 <div class="card-body">
                     <h5 class="card-title">{{ book.titre }}</h5>
+                    <hr>
+                    <p>Catégorie(s):
+                        {% for category in book.categories %}
+                        {{ category.name }},
+                    {% endfor %}
+                    </p>
                     <h6 class="card-title">Auteur: {{ book.author }}</h6>
                     <hr>
                     <span>ISBN: {{ book.iSBN }}</span>

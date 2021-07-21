@@ -12,6 +12,11 @@
         <div class="bg-light p-5 rounded-lg m-3">
             <h1 class="display-4">{{ book.titre }}</h1>
             <p class="lead">Auteur: {{ book.author }}</p>
+            <p>Catégorie(s):
+                {% for category in book.categories %}
+                    {{ category.name }},
+                {% endfor %}
+            </p>
             <br>
             <span>ISBN: {{ book.iSBN }}</span>
             <hr>
@@ -45,11 +50,16 @@
 
     {% if app.user %}
 
-     <div class="d-flex position-relative">
+     <div class="d-flex position-relative container form-group justify-content-center">
 
         {{ form_start(form) }}
 
-        {{ form_widget(form) }}
+         <div class="row" style="width: 600px">
+             <div class="col">
+                 {{ form_row(form.content) }}
+             </div>
+         </div>
+
 
         <button class="btn btn-primary" style="background-color: #d1314fff">Commenter</button>
         {{ form_end(form) }}

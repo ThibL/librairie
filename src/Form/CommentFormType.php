@@ -16,8 +16,10 @@ class CommentFormType extends AbstractType
             ->add('content',TextareaType::class,[
                 'label'=>' ',
                 'attr'=>[
-                    'placeholder'=>'Je m\'exprime ici...'
-                ]
+                    'placeholder'=>'Je m\'exprime ici...',
+                    'rows' => 6,
+                    "class" => 'form-control w-100 mb-2',
+                ],
             ])
         ;
     }

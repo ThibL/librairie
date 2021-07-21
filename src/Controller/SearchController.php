@@ -33,11 +33,7 @@ class SearchController extends AbstractController
                     'placeholder' => 'Entrez un mot-clé'
                 ]
             ])
-            ->add('recherche', SubmitType::class, [
-                'attr' => [
-                    'class' => 'btn btn-primary d-block'
-                ]
-            ])
+
             ->getForm();
         return $this->render('search/searchBar.html.twig', [
             'form' => $form->createView()

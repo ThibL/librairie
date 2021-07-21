@@ -3,6 +3,10 @@
 {% block title %}Votre recherche{% endblock %}
 
 {% block body %}
+
+<img src="{{ asset('assets/image/gradient600ppp.png') }}" class="img-fluid position-absolute top-0 start-0" alt="banner">
+
+
     {% if app.request.method == 'POST' %}
 <div class="">
     {% if books | length == 0 %}

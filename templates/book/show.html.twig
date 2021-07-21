@@ -1,21 +1,63 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}{{ book.titre }}{% endblock %}
+
 {% block body %}
-    <div class="d-flex justify-content-center">
-        <div class="card m-2" style="width: 18rem;">
+    <img src="{{ asset('assets/image/gradient600ppp.png') }}" class="img-fluid position-absolute top-0 start-0"
+         alt="banner">
+    <div class="d-flex align-items-center position-relative">
+        <div>
             <img class="card-img-top" src="{{ book.image }}" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">{{ book.titre }}</h5>
-                <h6 class="card-title">Auteur: {{ book.author }}</h6>
-                <hr>
-                <span>ISBN: {{ book.iSBN }}</span>
-                <hr>
-                <p class="card-text mt-2">{{ book.resume | striptags }}</p>
-                <div class="d-flex justify-content-between align-items-center">
-                        <a href="{{ path('carte_add', {id: book.id}) }}" class="btn btn-warning mr-auto">Ajouter au panier</a>
-                    <span>{{ book.prix }} €</span>
-                </div>
+        </div>
+        <div class="bg-light p-5 rounded-lg m-3">
+            <h1 class="display-4">{{ book.titre }}</h1>
+            <p class="lead">Auteur: {{ book.author }}</p>
+            <br>
+            <span>ISBN: {{ book.iSBN }}</span>
+            <hr>
+            <p>{{ book.resume | striptags }}</p>
+            <div class="d-flex justify-content-between align-items-center">
+                <a href="{{ path('carte_add', {id: book.id}) }}" class="btn btn-warning mr-auto" style="background-color: #338488ff">Ajouter au
+                    panier</a>
+                <span>{{ book.prix }} €</span>
             </div>
         </div>
     </div>
+
+        {% for comment in book.comments %}
+            <div class="comment mt-4 position-relative">
+                <div class="row">
+                    <div class="col-3">
+                            <span class="text-secondary
+">
+            {{ comment.author }}
+
+                                </span>(<small>{{ comment.createdAt|date('d/m/Y à H:i') }}</small>) :
+                    </div>
+                    <div class="col">
+                        {{ comment.content | nl2br }}
+                    </div>
+                </div>
+            <hr>
+
+        {% endfor %}
+    </div>
+
+    {% if app.user %}
+
+     <div class="d-flex position-relative">
+
+        {{ form_start(form) }}
+
+        {{ form_widget(form) }}
+
+        <button class="btn btn-primary" style="background-color: #d1314fff">Commenter</button>
+        {{ form_end(form) }}
+     </div>
+
+    {% endif %}
+
 {% endblock %}
+
+
+

@@ -1,13 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Librairie Colbert{% endblock %}
 
 {% block body %}
-    <div class="bg-light p-5 rounded-lg m-3">
-        <h1 class="display-4">Bienvenue à la librairie Colbert</h1>
-        <p class="lead">Vous êtes sur le site de notre librairie, vous pourrez consulter et acheter des livres et vous faire livrer à domicile !</p>
-        <hr class="my-4">
-        <p>Pour accéder à la liste de nos ouvrages cliquez sur le lien ci-dessous</p>
-        <a class="btn btn-primary btn-lg" href="{{ path('book') }}" role="button">Accéder aux livres</a>
-    </div>
+        <img src="{{ asset('assets/image/bannergradient600ppp.png') }}" class="img-fluid position-absolute top-0 start-0" alt="banner">
+        <div class="position-relative" >
+                <h1 class="text-light text-center mt-5">
+                        Bienvenue à la meilleure librairie de France.
+                </h1>
+        </div>
 {% endblock %}
